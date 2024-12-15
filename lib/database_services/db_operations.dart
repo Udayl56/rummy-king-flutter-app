@@ -21,7 +21,31 @@ class DbOperations with ChangeNotifier {
   ];
 
   //int _totalPlayer = 4;
-  String? _gameId;
+  String _gameId = '';
+  String get gameId => _gameId;
+  int _round = 0;
+  int get round => _round;
+  set setRound(round) {
+    _round = round;
+  }
+
+  set gameId(gameid) {
+    _gameId = gameid;
+  }
+
+  Future<List<Map<String, dynamic>>> continueGameSetScore() async {
+    try {
+      final db = await _dbHelper.databaseService();
+      final sqlQuery = 'SELECT * FROM Game_$_gameId';
+      print('continue game query :$sqlQuery');
+      final record = await db.rawQuery(sqlQuery);
+      print('continue game query :$record');
+      return record;
+    } catch (e) {
+      // print('Error: $e');
+      return [];
+    }
+  }
 
   Future<void> getStartGameId() async {
     try {
@@ -31,24 +55,33 @@ class DbOperations with ChangeNotifier {
       if (result.isNotEmpty) {
         _gameId = result.first[_dbHelper.col_1].toString();
       }
-      print('\ngame id:');
-      print(_gameId);
+      //print('\ngame id:$_gameId');
     } catch (e) {
       print(e);
       print('Error getting table name id');
     }
   }
 
-  Stream<List<dynamic>> readCurrGameScore() async* {
+  Future<List<dynamic>> readCurrGameScore() async {
     try {
-      print('Fetching current game score from gameid $_gameId');
+      // print('Fetching current game score from gameid $_gameId');
       final db = await _dbHelper.databaseService();
       final sqlQuery = 'SELECT * FROM Game_$_gameId';
       final record = await db.rawQuery(sqlQuery);
-      yield record.map((row) => row.values.toList()).toList();
+      _round = record.length;
+
+      final result = record.map((row) {
+        // Filter out the 'round' column and convert to a list
+        return row.entries
+            .where((entry) => entry.key != 'round') // Exclude 'round' column
+            .map((entry) => entry.value)
+            .toList();
+      }).toList();
+
+      return result;
     } catch (e) {
-      print('Error reading from database: $e');
-      yield [];
+      // print('Error reading from database: $e');
+      return [];
     }
   }
 
@@ -65,19 +98,19 @@ class DbOperations with ChangeNotifier {
 
       await creatNewGametable(totalPlayer);
     } catch (e) {
-      print("Error in insertNewGame: $e");
+      // print("Error in insertNewGame: $e");
     }
   }
 
 // create new table
   Future<void> creatNewGametable(int totalPlayer) async {
     final String query = _TableQuery(totalPlayer);
-    print("Creating table with query: $query");
+    // print("Creating table with query: $query");
     try {
       final db = await _dbHelper.databaseService();
       await db.execute(query);
     } catch (e) {
-      print("Error creating new table: $e");
+      // print("Error creating new table: $e");
     }
   }
 
@@ -103,25 +136,21 @@ class DbOperations with ChangeNotifier {
       final db = await _dbHelper.databaseService();
       // final gameName = await readCurrTableName(); // Await the asynchronous call
 
-      print('Inserting into table: Game_$_gameId');
+      //print('Inserting into table: Game_$_gameId');
       await db.insert('Game_$_gameId', row);
-      print('Insert successful');
+      //print('Insert successful');
     } catch (e) {
-      print('Error inserting into database: $e');
+      // print('Error inserting into database: $e');
     }
   }
 
   // set continue gamename
 
-  void setContinueGameName(String gameId) {
-    _gameId = gameId;
-  }
-
 //  get all game history record
   Future<List<Map<String, dynamic>>> readAllGame() async {
     try {
       final db = await _dbHelper.databaseService();
-      print('featch all game history record');
+      //print('featch all game history record');
       final String sqlQuery =
           'SELECT ${_dbHelper.col_1}, ${_dbHelper.col_2},${_dbHelper.col_3},${_dbHelper.col_4} FROM ${_dbHelper.tableName}  ORDER BY ${_dbHelper.col_1} DESC';
 
@@ -129,7 +158,7 @@ class DbOperations with ChangeNotifier {
 
       return record;
     } catch (e) {
-      print('Error reading from database: $e');
+      // print('Error reading from database: $e');
       return []; // Return an empty list if reading fails
     }
   }
@@ -139,9 +168,9 @@ class DbOperations with ChangeNotifier {
       final db = await _dbHelper.databaseService();
       await db.delete(_dbHelper.tableName,
           where: '${_dbHelper.col_1} = ?', whereArgs: [gameId]);
-      await db.execute('DROP TABLE IF EXISTS $gameId');
+      await db.execute('DROP TABLE IF EXISTS Game_$gameId');
     } catch (e) {
-      print('exception occur when deleting row $e');
+      //print('exception occur when deleting row $e');
     }
   }
 }

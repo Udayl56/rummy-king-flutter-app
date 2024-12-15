@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:rummy_king/app_provider/game_data_provider.dart';
-import 'package:rummy_king/database_services/db_operations.dart';
 
 class EnterScore extends StatelessWidget {
   const EnterScore({super.key});
@@ -41,7 +41,7 @@ class _InputScoreState extends State<InputScore> {
     final appProvider = Provider.of<RummyKingProvider>(context, listen: false);
 
     _controllers = List.generate(
-      appProvider.totalPlayer,
+      appProvider.playerInGameSize,
       (index) => TextEditingController(),
     );
   }
@@ -55,10 +55,9 @@ class _InputScoreState extends State<InputScore> {
   }
 
   void _addScore() {
-    final dbProvider = Provider.of<DbOperations>(context, listen: false);
     final appProvider = Provider.of<RummyKingProvider>(context, listen: false);
 
-    final Map<String, dynamic> row = {};
+    final Map<String, int> row = {};
 
     for (var index = 0; index < _controllers.length; index++) {
       final score = int.tryParse(_controllers[index].text) ?? 0;
@@ -66,8 +65,9 @@ class _InputScoreState extends State<InputScore> {
     }
 
 // insert
-    dbProvider.insertRoundscore(row);
-// read
+    appProvider.insertData(row);
+
+    appProvider.updateScore(row);
 
     for (var controller in _controllers) {
       controller.clear();
@@ -106,10 +106,16 @@ class _InputScoreState extends State<InputScore> {
                       Expanded(
                         flex: 3,
                         child: TextField(
+                          maxLength: 3,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter
+                                .digitsOnly, // Restrict to digits
+                          ],
                           keyboardType: TextInputType.number,
                           controller: _controllers[index],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
+                            counterText: '',
                             hintText: 'Enter score',
                           ),
                         ),

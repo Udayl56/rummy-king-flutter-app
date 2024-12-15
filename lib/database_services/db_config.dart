@@ -36,11 +36,6 @@ class DBHelper {
       return _database!;
     }
     _database = await _initDataBase();
-
-    if (_database == null) {
-      throw Exception('Failed to initialize the database.');
-    }
-
     return _database!;
   }
 
@@ -62,12 +57,12 @@ class DBHelper {
 
               )''');
           } catch (e) {
-            print('Error creating table: $e');
+            // print('Error creating table: $e');
           }
         },
       );
     } catch (e) {
-      print('Error initializing database: $e');
+      // print('Error initializing database: $e');
       return null; // Return null if initialization fails
     }
   }

@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:rummy_king/app_provider/game_data_provider.dart';
 import 'package:rummy_king/database_services/db_operations.dart';
 import 'package:rummy_king/gameHistory.dart';
-
 import 'package:rummy_king/theam.dart';
 import 'package:rummy_king/utils/routes.dart';
 import 'package:rummy_king/utils/routes_name.dart';
@@ -45,9 +44,6 @@ class Home extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: const Text('RummyKing'),
-          actions: [
-            IconButton(onPressed: () {}, icon: Icon(Icons.more_vert)),
-          ],
         ),
         body: Padding(
             padding: EdgeInsets.only(left: 40, right: 40, top: 40, bottom: 40),
@@ -105,11 +101,11 @@ class SelectPlayer extends StatelessWidget {
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                   color: appProvider.totalPlayer == player
-                      ? const Color.fromARGB(86, 68, 137, 255)
+                      ? const Color.fromARGB(219, 240, 169, 5)
                       : null,
                   shape: BoxShape.circle,
                   border: Border.all(color: const Color.fromARGB(42, 0, 0, 0))),
-              child: Text('${index+2}'),
+              child: Text('${index + 2}'),
             ),
           );
         }));
@@ -130,12 +126,12 @@ class SelectPool extends StatelessWidget {
         children: List.generate(3, (index) {
           int poolValue = (index + 1) * 100;
           return GestureDetector(
-            onTap: () => appProvider.setPool(poolValue),
+            onTap: () => appProvider.setPool = poolValue,
             child: Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                   color: appProvider.poolLimit == poolValue
-                      ? const Color.fromARGB(86, 68, 137, 255)
+                      ? const Color.fromARGB(219, 240, 169, 5)
                       : Colors.white10,
                   border: Border.all(color: const Color.fromARGB(30, 0, 0, 0))),
               child: Text('$poolValue'),

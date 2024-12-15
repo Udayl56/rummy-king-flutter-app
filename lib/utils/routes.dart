@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:rummy_king/addScore.dart';
-import 'package:rummy_king/app_provider/game_data_provider.dart';
 import 'package:rummy_king/gameHistory.dart';
 import 'package:rummy_king/main.dart';
-import 'package:rummy_king/playGame.dart';
 import 'package:rummy_king/scoreBoard.dart';
 import 'package:rummy_king/utils/routes_name.dart';
 
@@ -36,7 +33,7 @@ class Routes {
           builder: (_) {
             return Scaffold(
               body: Center(
-                child: Text('No route defined for ${settings.name}'),
+                child: Text('something went to wrong ${settings.name}'),
               ),
             );
           },
