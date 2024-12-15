@@ -1,16 +1,19 @@
-# rummy_king
+# Rummy King 🎴
+Rummy King is a score management application designed for rummy card games. It provides an intuitive interface to track each player's score in a tabular format, record game history, and manage rejoin scenarios for players. Features include:
 
-A new Flutter project.
+Score Management: Easily track and update scores for all players in real time.
+Game History: Keep a record of previous games for reference and analysis.
+Player Management: Handle out players and rejoining seamlessly during the game.
+Perfect for casual and competitive rummy sessions!
+<hr>
+ScreenShot
+![image](https://github.com/user-attachments/assets/cd17c4fe-a4e3-4406-87be-e40f6578eff6)
+![image](https://github.com/user-attachments/assets/ee1523bd-8c8f-44ee-9438-736e57465ac1)
+![image](https://github.com/user-attachments/assets/0e66910c-7000-44ae-9212-119ebf23a3b0)
+![image](https://github.com/user-attachments/assets/e42ba1d4-94c9-490f-a464-cb24b7046ed2)
+![image](https://github.com/user-attachments/assets/c64aad6d-39a3-42f3-aea9-8d04f1078b74)
+![image](https://github.com/user-attachments/assets/3044db19-1d25-4852-8116-d83a7a88db9d)
+<hr>
+<b> Download 👇 </b> 
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
