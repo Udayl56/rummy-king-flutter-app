@@ -14,6 +14,8 @@ ScreenShot
 ![image](https://github.com/user-attachments/assets/c64aad6d-39a3-42f3-aea9-8d04f1078b74)
 ![image](https://github.com/user-attachments/assets/3044db19-1d25-4852-8116-d83a7a88db9d)
 <hr>
-<b> Download 👇 </b> 
+
+[![Download APK](https://img.shields.io/badge/Download-APK-blue?style=for-the-badge&logo=android)](
+https://github.com/Udayl56/rummy-king-flutter-app/releases/download/rummy-card-game/app-release.apk)
 
 
